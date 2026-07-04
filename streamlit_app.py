@@ -21,18 +21,54 @@ st.set_page_config(
     layout="wide"
 )
 
+st.markdown("""
+<style>
+
+.block-container{
+    padding-top:2rem;
+}
+
+div[data-testid="stMetric"]{
+    background:#E8F5E9;
+    border-radius:12px;
+    padding:15px;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
 # Read Excel Database
 data = pd.read_excel("data/Potato_database.xlsx")
 data.columns = data.columns.str.strip()
 
-# Title
-st.title("🥔 MZ PotatoTwin AI")
-st.subheader("Smart Potato Recommendation System")
+# ---------------- HEADER ----------------
+
+st.markdown("""
+<h1 style='text-align:center;color:#2E8B57;font-size:55px;'>
+🥔 MZ PotatoTwin AI
+</h1>
+
+<h3 style='text-align:center;color:#666666;'>
+AI Powered Smart Potato Recommendation System
+</h3>
+""", unsafe_allow_html=True)
+
+st.markdown("---")
+
+# ---------------- SIDEBAR ----------------
+
+st.sidebar.image("images/potato.png", width=170)
+
+st.sidebar.title("🥔 MZ PotatoTwin AI")
+
+st.sidebar.success("🌱 Smart Farming Assistant")
+
+st.sidebar.markdown("---")
 
 # Sidebar
-st.sidebar.title("Menu")
 
-option = st.sidebar.selectbox(
+
+option = st.sidebar.radio(
     "Select Feature",
     [
         "🏠 Home",
@@ -52,57 +88,136 @@ option = st.sidebar.selectbox(
 
 if option == "🏠 Home":
 
-    st.header("Welcome to MZ PotatoTwin AI")
+    st.image("images/field.jpg", use_container_width=True)
 
-    st.write("""
-This AI system helps farmers choose the best potato variety based on:
+    st.markdown("""
+# 🌾 Welcome to MZ PotatoTwin AI
 
-- District
-- Season
-- Soil Type
-- Disease Information
-- Fertilizer Recommendation
-- AI Smart Recommendation
+### Making Potato Farming Smarter with Artificial Intelligence
 """)
 
+    st.success("Helping Farmers with AI + Live Weather + Climate Advisory")
+
+    col1, col2 = st.columns([1,2])
+
+    with col1:
+        st.image("images/potato.png", width=250)
+
+    with col2:
+
+        st.markdown("""
+### 🚀 What can this system do?
+
+✅ Search Potato Variety
+
+✅ AI Smart Recommendation
+
+✅ Live Weather
+
+✅ Climate Advisory
+
+✅ Disease Information
+
+✅ Fertilizer Recommendation
+
+✅ District Recommendation
+
+✅ Season Recommendation
+
+✅ Soil Recommendation
+""")
+
+    st.markdown("---")
+
+    c1,c2,c3,c4 = st.columns(4)
+
+    with c1:
+        st.metric("🥔 Potato", "50+")
+
+    with c2:
+        st.metric("🤖 AI", "Active")
+
+    with c3:
+        st.metric("🌦 Weather", "Live")
+
+    with c4:
+        st.metric("🌱 Farmers", "Supported")
+
+    st.markdown("---")
+
+    st.header("✨ Why Choose MZ PotatoTwin AI?")
+
+    col1,col2,col3=st.columns(3)
+
+    with col1:
+        st.success("🤖 Artificial Intelligence")
+
+    with col2:
+        st.success("🌦 Live Weather")
+
+    with col3:
+        st.success("📈 Better Decision Making")
+
+    st.markdown("---")
+
+    st.info("""
+### 🎯 Project Objective
+
+Our mission is to help potato farmers select the best potato variety using:
+
+🌦 Live Weather
+
+🤖 Artificial Intelligence
+
+🌍 Climate Advisory
+
+📈 Smart Recommendation
+
+🦠 Disease Awareness
+""")
+
+    st.markdown("---")
+
+    st.caption("👩‍💻 Developed by Muqadas Zahoor")
 # ---------------- SEARCH VARIETY ----------------
 
 elif option == "🔍 Search Potato Variety":
 
-    st.header("Search Potato Variety")
+    st.header("🔍 Search Potato Variety")
 
-    variety = st.text_input("Enter Potato Variety Name")
+    st.info("Search complete information about any potato variety.")
 
-    if st.button("Search"):
+    variety = st.text_input("🥔 Enter Potato Variety Name")
 
-        result = data[
-            data["Variety name"].str.lower() == variety.lower()
-        ]
+    if st.button("🔍 Search Variety"):
+
+        result = data[data["Variety name"].str.lower() == variety.lower()]
 
         if result.empty:
 
-            st.error("Potato Variety Not Found!")
+            st.error("❌ Potato Variety Not Found")
 
         else:
 
             row = result.iloc[0]
 
-            st.success("Potato Variety Found")
+            st.success("✅ Variety Found Successfully")
 
-            for column in data.columns:
-
-                st.write(f"**{column}:** {row[column]}")
-
-
+            st.dataframe(
+                row.to_frame(name="Information"),
+                use_container_width=True
+            )
 # ---------------- DISTRICT RECOMMENDATION ----------------
 
 elif option == "📍 District Recommendation":
 
-    st.header("District Recommendation")
+    st.header("📍 District Recommendation")
 
-    district = st.text_input("Enter District Name")
+    st.info("Find the best potato varieties for your district.")
 
-    if st.button("Find Varieties"):
+    district = st.text_input("📍 Enter District")
+
+    if st.button("🌱 Recommend Varieties"):
 
         district_result = data[
             data["Suitable area"].str.contains(district, case=False, na=False)
@@ -110,144 +225,165 @@ elif option == "📍 District Recommendation":
 
         if district_result.empty:
 
-            st.error("No potato variety found for this district.")
+            st.error("❌ No Variety Found")
 
         else:
 
-            st.success("Recommended Potato Varieties")
+            st.success("✅ Recommended Varieties")
 
-            for variety in district_result["Variety name"]:
-
-                st.write("🥔", variety)
-
-
+            st.dataframe(
+                district_result[["Variety name"]],
+                use_container_width=True
+            )
 # ---------------- SEASON RECOMMENDATION ----------------
 
 elif option == "🌱 Season Recommendation":
 
-    st.header("Season Recommendation")
+    st.header("🌱 Season Recommendation")
 
-    season = st.text_input("Enter Season")
+    season = st.text_input("🌱 Enter Season")
 
-    if st.button("Recommend"):
+    if st.button("🌿 Recommend"):
 
-        season_result = data[
+        result = data[
             data["Suitable Season"].str.contains(season, case=False, na=False)
         ]
 
-        if season_result.empty:
+        if result.empty:
 
-            st.error("No potato variety found.")
+            st.error("❌ No Variety Found")
 
         else:
 
-            st.success("Recommended Potato Varieties")
+            st.success("✅ Recommended Varieties")
 
-            for variety in season_result["Variety name"]:
-
-                st.write("🥔", variety)
-
+            st.dataframe(
+                result[["Variety name"]],
+                use_container_width=True
+            )
 
 # ---------------- SOIL RECOMMENDATION ----------------
 
 elif option == "🌾 Soil Recommendation":
 
-    st.header("Soil Recommendation")
+    st.header("🌾 Soil Recommendation")
 
-    soil = st.text_input("Enter Soil Type")
+    soil = st.text_input("🌾 Enter Soil Type")
 
-    if st.button("Search"):
+    if st.button("🌱 Find Variety"):
 
-        soil_result = data[
+        result = data[
             data["Soil type"].str.contains(soil, case=False, na=False)
         ]
 
-        if soil_result.empty:
+        if result.empty:
 
-            st.error("No potato variety found.")
+            st.error("❌ No Variety Found")
 
         else:
 
-            st.success("Recommended Potato Varieties")
+            st.success("✅ Recommended Varieties")
 
-            for variety in soil_result["Variety name"]:
-
-                st.write("🥔", variety)
-
-
+            st.dataframe(
+                result[["Variety name"]],
+                use_container_width=True
+            )
 # ---------------- DISEASE INFORMATION ----------------
 
 elif option == "🦠 Disease Information":
 
-    st.header("Disease Information")
+    st.header("🦠 Disease Risk Information")
 
-    variety = st.text_input("Enter Potato Variety")
+    st.info("Check disease resistance and risks for a potato variety.")
 
-    if st.button("Show Disease Information"):
+    variety = st.text_input("🥔 Enter Potato Variety")
+
+    if st.button("🦠 Check Disease Risk"):
 
         result = data[data["Variety name"].str.lower() == variety.lower()]
 
         if result.empty:
 
-            st.error("Potato Variety Not Found!")
+            st.error("❌ Potato Variety Not Found")
 
         else:
 
             row = result.iloc[0]
 
-            st.success("Disease Information")
+            st.success("✅ Disease Information")
 
-            st.write("**Late Blight Risk:**", row["late blight risk"])
-            st.write("**Early Blight Risk:**", row["early blight risk"])
-            st.write("**Common Scab Risk:**", row["common scab risk"])
-            st.write("**Black Scurf Risk:**", row["black scurf risk"])
-            st.write("**Bacterial Wilt Risk:**", row["bacterial wilt risk"])
-            st.write("**Disease Resistant:**", row["disease resistant"])
-            st.write("**Major Diseases:**", row["major diseases"])
+            col1, col2 = st.columns(2)
 
+            with col1:
+                st.metric("Late Blight", row["late blight risk"])
+                st.metric("Early Blight", row["early blight risk"])
+                st.metric("Common Scab", row["common scab risk"])
+
+            with col2:
+                st.metric("Black Scurf", row["black scurf risk"])
+                st.metric("Bacterial Wilt", row["bacterial wilt risk"])
+                st.metric("Disease Resistant", row["disease resistant"])
+
+            st.markdown("### 🧬 Major Diseases")
+            st.info(row["major diseases"])
 
 # ---------------- FERTILIZER RECOMMENDATION ----------------
 
 elif option == "🌿 Fertilizer Recommendation":
 
-    st.header("Fertilizer Recommendation")
+    st.header("🌿 Fertilizer Recommendation")
 
-    variety = st.text_input("Enter Potato Variety")
+    variety = st.text_input("🥔 Enter Potato Variety")
 
-    if st.button("Show Fertilizer Recommendation"):
+    if st.button("🌿 Show Recommendation"):
 
         result = data[data["Variety name"].str.lower() == variety.lower()]
 
         if result.empty:
 
-            st.error("Potato Variety Not Found!")
+            st.error("❌ Potato Variety Not Found")
 
         else:
 
             row = result.iloc[0]
 
-            st.success("Fertilizer Recommendation")
+            st.success("✅ Fertilizer Recommendation")
 
-            st.write("**Nitrogen:**", row["nitrogen"])
-            st.write("**Phosphorus:**", row["phosphorus"])
-            st.write("**Potassium:**", row["potassium"])
-            st.write("**Recommendation:**", row["fertilizer recommendation"])
+            col1, col2, col3 = st.columns(3)
 
+            with col1:
+                st.metric("Nitrogen", row["nitrogen"])
+
+            with col2:
+                st.metric("Phosphorus", row["phosphorus"])
+
+            with col3:
+                st.metric("Potassium", row["potassium"])
+
+            st.markdown("### 🌱 Recommendation")
+
+            st.success(row["fertilizer recommendation"])
 
 # ---------------- VIEW ALL VARIETIES ----------------
 
 elif option == "📋 View All Varieties":
 
-    st.header("Available Potato Varieties")
+    st.header("📋 Available Potato Varieties")
 
-    st.dataframe(data[["Variety name"]], use_container_width=True)
+    st.success(f"Total Varieties: {len(data)}")
 
+    st.dataframe(
+        data[["Variety name"]],
+        use_container_width=True,
+        hide_index=True
+    )
 
 # ---------------- AI SMART RECOMMENDATION ----------------
 
 elif option == "🤖 AI Smart Recommendation":
 
     st.header("🤖 AI Smart Recommendation")
+    st.success("🤖 AI has analyzed your location, weather and soil conditions.")
 
     city = st.text_input("District / City")
     district = city
@@ -332,6 +468,14 @@ elif option == "🤖 AI Smart Recommendation":
                 st.progress(min(score, 100) / 100)
 
                 st.write("**AI Match Score:**", str(score) + "%")
+                if score >= 90:
+                    st.success("🏆 Excellent Match")
+
+                elif score >= 70:
+                    st.info("✅ Good Match")
+
+                else:
+                    st.warning("⚠ Moderate Match")
                 st.write("🌡️ Live Temperature:", str(temperature) + " °C")
                 st.write("💧 Live Humidity:", str(humidity) + "%")
                 st.write("💨 Wind Speed:", str(wind) + " km/h")
@@ -342,6 +486,17 @@ elif option == "🤖 AI Smart Recommendation":
                 st.write("**Yield Potential:**", row["yield potential"])
                 st.write("**Disease Resistant:**", row["disease resistant"])
                 st.subheader("🤖 Why This Variety?")
+                st.markdown("### 👨‍🌾 Farmer Advice")
+
+                if score >= 90:
+                    st.success("Highly recommended for cultivation under current conditions.")
+
+                elif score >= 70:
+                    st.info("Suitable variety. Follow proper irrigation and fertilizer schedule.")
+
+                else:
+                    st.warning("Suitable with careful crop management.")
+
 
                 reasons = []
 
@@ -410,7 +565,7 @@ elif option == "🌦️ Live Weather & Climate":
             wind = weather["current"]["wind_kph"]
             condition = weather["current"]["condition"]["text"]
 
-            st.success("Live Weather Information")
+            st.success("🌦 Live Weather Dashboard")
 
             col1, col2 = st.columns(2)
 
@@ -442,6 +597,23 @@ elif option == "🌦️ Live Weather & Climate":
             else:
                 st.info("💧 Irrigation can be scheduled normally.")
 
+
         else:
 
             st.error("City not found or API request failed.")
+
+        st.markdown("---")
+
+        st.info("""
+        ### 🌱 Smart Farming Tips
+
+        ✅ Use certified seed.
+
+        💧 Avoid over irrigation.
+
+        🌦 Monitor weather regularly.
+
+        🦠 Inspect crop every week.
+
+        🌿 Apply balanced fertilizer.
+        """)
