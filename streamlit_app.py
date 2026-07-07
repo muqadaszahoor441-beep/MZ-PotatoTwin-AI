@@ -33,6 +33,57 @@ div[data-testid="stMetric"]{
     border-radius:12px;
     padding:15px;
 }
+            
+ /* Sidebar */
+section[data-testid="stSidebar"]{
+    background: linear-gradient(180deg,#1B5E20,#2E7D32,#388E3C);
+}
+
+section[data-testid="stSidebar"] *{
+    color:white !important;
+}
+
+/* Buttons */
+.stButton>button{
+    background:#2E7D32;
+    color:white;
+    border-radius:12px;
+    border:none;
+    padding:10px 18px;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+.stButton>button:hover{
+    background:#1B5E20;
+    transform:scale(1.05);
+}
+
+/* Cards */
+.feature-card{
+    background:white;
+    border-radius:18px;
+    padding:20px;
+    box-shadow:0px 6px 18px rgba(0,0,0,0.15);
+    text-align:center;
+    transition:0.4s;
+    margin-bottom:15px;
+}
+
+.feature-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0px 10px 25px rgba(0,0,0,0.25);
+}
+
+/* Gradient Title */
+.main-title{
+    text-align:center;
+    font-size:48px;
+    font-weight:800;
+    background:linear-gradient(90deg,#2E7D32,#66BB6A,#A5D6A7);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}           
 
 </style>
 """, unsafe_allow_html=True)
@@ -97,6 +148,21 @@ if option == "🏠 Home":
 """)
 
     st.success("Helping Farmers with AI + Live Weather + Climate Advisory")
+    st.markdown("""
+    <div style="background:linear-gradient(90deg,#2E8B57,#66BB6A);
+    padding:25px;
+    border-radius:15px;
+    color:white;
+    text-align:center;">
+
+    <h2>🥔 Welcome to MZ PotatoTwin AI</h2>
+
+    <p style="font-size:18px;">
+    AI-Based Potato Recommendation • Live Weather • Climate Advisory
+    </p>
+
+    </div>
+    """, unsafe_allow_html=True)
 
     col1, col2 = st.columns([1,2])
 
@@ -160,6 +226,7 @@ if option == "🏠 Home":
 
     st.markdown("---")
 
+
     st.info("""
 ### 🎯 Project Objective
 
@@ -175,10 +242,86 @@ Our mission is to help potato farmers select the best potato variety using:
 
 🦠 Disease Awareness
 """)
+    
+    st.markdown("---")
+    st.header("🚀 Smart Features")
+
+    c1, c2, c3 = st.columns(3)
+
+    with c1:
+        st.markdown("""
+        <div class="feature-card">
+        <h2>🤖</h2>
+        <h4>AI Recommendation</h4>
+        <p>Find the best potato variety using AI.</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with c2:
+        st.markdown("""
+        <div class="feature-card">
+        <h2>🌦️</h2>
+        <h4>Live Weather</h4>
+        <p>Real-time weather with climate advisory.</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with c3:
+        st.markdown("""
+        <div class="feature-card">
+        <h2>🦠</h2>
+        <h4>Disease Guide</h4>
+        <p>Know disease risks and resistant varieties.</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    c4, c5, c6 = st.columns(3)
+
+    with c4:
+        st.markdown("""
+        <div class="feature-card">
+        <h2>🌱</h2>
+        <h4>Season Match</h4>
+        <p>Choose the right planting season.</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with c5:
+        st.markdown("""
+        <div class="feature-card">
+        <h2>🌾</h2>
+        <h4>Soil Analysis</h4>
+        <p>Recommend varieties based on soil type.</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with c6:
+        st.markdown("""
+        <div class="feature-card">
+        <h2>🌿</h2>
+        <h4>Fertilizer Guide</h4>
+        <p>Smart fertilizer recommendations.</p>
+        </div>
+        """, unsafe_allow_html=True)
 
     st.markdown("---")
 
-    st.caption("👩‍💻 Developed by Muqadas Zahoor")
+    st.markdown("""
+    <div style="text-align:center;
+    padding:20px;
+    background:#E8F5E9;
+    border-radius:10px;
+    color:#2E7D32;">
+
+    <h3>👩‍💻 Developed by Muqadas Zahoor</h3>
+
+    <p>MZ PotatoTwin AI</p>
+
+    <p>🌱 AI-Based Smart Farming Platform for Potato Growers</p>
+
+    </div>
+    """, unsafe_allow_html=True)
+    
 # ---------------- SEARCH VARIETY ----------------
 
 elif option == "🔍 Search Potato Variety":
