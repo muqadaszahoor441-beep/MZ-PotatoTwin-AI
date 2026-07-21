@@ -1,11 +1,9 @@
 import pandas as pd
 
-data = pd.read_excel("data/Potato_database.xlsx")
-data.columns = data.columns.str.strip()
-
-
-
-
+data = pd.read_excel(
+    "data/Potato_database.xlsx",
+    sheet_name="potato varieties"
+)
 
 def search_variety():
 
@@ -144,7 +142,7 @@ def ai_smart_recommendation():
     ph = float(input("Enter Soil pH: "))
     temperature = float(input("Enter Average Temperature (°C): "))
     rainfall = input("Enter Expected Rainfall (mm): ")
-
+   
     # Convert numeric columns
     data["Ideal pH minimum"] = pd.to_numeric(data["Ideal pH minimum"], errors="coerce")
     data["Ideal pH maximum"] = pd.to_numeric(data["Ideal pH maximum"], errors="coerce")
